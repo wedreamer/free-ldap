@@ -39,7 +39,7 @@
         "no-arg": true, // 不允许使用arguments.callee
         // "no-bitwise":true, // 不允许使用特殊运算符 &, &=, |, |=, ^, ^=, <<, <<=, >>, >>=, >>>, >>>=, ~
         "no-conditional-assignment": true, // do while/for/if/while 语句中将会对例如if(a=b)进行检查
-        // "no-console":true,// 不允许使用console对象
+        "no-console":true,// 不允许使用console对象
         "no-debugger": true, // 不允许使用debugger
         "no-duplicate-super": true, // 不允许super() 两次使用在构造函数中
         "no-empty": true, // 函数体不允许空
@@ -129,5 +129,7 @@
         "quotemark": true,
         "prefer-const": true
     },
-    "rulesDirectory": []
+    "rulesDirectory": [
+        "src/**/*.ts"
+    ]
 }
