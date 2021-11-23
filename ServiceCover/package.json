@@ -1,0 +1,24 @@
+{
+  "name": "@shubuzuo/service-cover",
+  "version": "1.0.8",
+  "description": "",
+  "keywords": [],
+  "author": "shubuzuo",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/reflect-metadata": "^0.1.0"
+  },
+  "dependencies": {
+    "@shubuzuo/ts-promise-node": "0.3.25",
+    "reflect-metadata": "^0.1.13"
+  },
+  "types": "src/CoverService.ts",
+  "files": [
+    "src/**/*.ts"
+  ],
+  "main": "dist/CoverService.js",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
+}

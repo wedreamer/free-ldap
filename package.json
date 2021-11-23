@@ -23,17 +23,28 @@
   },
   "homepage": "https://github.com/wedreamer/free-ldap#readme",
   "dependencies": {
+    "@bung87/grpc-promise-ts": "^0.2.2",
+    "@shubuzuo/grpc-promise-ts": "^0.2.2",
+    "@shubuzuo/ts-promise-node": "^0.5.0",
+    "@types/google-protobuf": "^3.15.5",
+    "@types/mongodb": "^4.0.7",
     "@types/node": "^16.7.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.1",
+    "google-protobuf": "^3.19.1",
+    "grpc-promise-ts": "^0.2.2",
+    "mongodb": "^4.2.0",
     "prettier": "^2.3.2",
+    "reflect-metadata": "0.1.13",
     "typescript": "^4.3.5"
   },
   "devDependencies": {
+    "@types/reflect-metadata": "^0.1.0",
     "@typescript-eslint/eslint-plugin": "^4.29.3",
     "@typescript-eslint/parser": "^4.29.3",
-    "eslint": "^7.32.0",
+    "eslint": "^7.0.0",
     "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-plugin-import": "^2.24.1"
+    "eslint-plugin-import": "^2.24.1",
+    "ts-node": "^10.4.0"
   }
 }
