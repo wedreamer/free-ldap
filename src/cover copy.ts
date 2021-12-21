@@ -1,5 +1,29 @@
 import 'reflect-metadata'
-import { array, boolean, optional, stringArray, validate } from '../ServiceCover/src/CoverService';
+
+const requiredMetadataKey = Symbol("required");
+
+function required(target: Object, propertyKey: string | symbol, parameterIndex: number) {
+    let existingRequiredParameters: number[] = Reflect.getOwnMetadata(requiredMetadataKey, target, propertyKey) || [];
+    existingRequiredParameters.push(parameterIndex);
+    Reflect.defineMetadata(requiredMetadataKey, existingRequiredParameters, target, propertyKey);
+}
+
+function validate(target: any, propertyName: string, descriptor: TypedPropertyDescriptor<Function>) {
+    let method = descriptor.value!;
+
+    descriptor.value = function () {
+        let requiredParameters: number[] = Reflect.getOwnMetadata(requiredMetadataKey, target, propertyName);
+        if (requiredParameters) {
+            for (let parameterIndex of requiredParameters) {
+                if (parameterIndex >= arguments.length || arguments[parameterIndex] === undefined) {
+                    throw new Error("Missing required argument.");
+                }
+            }
+        }
+        return method.apply(this, arguments);
+    };
+}
+
 class Person {
     name: string;
     age: number;
@@ -54,7 +78,7 @@ function CoverAbleMethod(): MethodDecorator {
 }
 
 @CoverAbleClass()
-abstract class TestService {
+class TestService {
     type = "report";
     title: string;
 
@@ -64,8 +88,7 @@ abstract class TestService {
 
     // @validate
     @CoverAbleMethod()
-    // async say(@required @required name: string = 'ok'): Promise<Person> {
-    async say(): Promise <Person> {
+    async say(@required @required name: string = 'ok'): Promise<Person> {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 resolve(new Student('okok', 19, 111));
@@ -75,7 +98,7 @@ abstract class TestService {
     }
 
     @validate
-    print(@stringArray verbose: number [] = []) {
+    print(@required verbose: boolean) {
         if (verbose) {
             return `type: ${this.type}\ntitle: ${this.title}`;
         } else {
@@ -86,10 +109,6 @@ abstract class TestService {
     see(): Person {
         return new Person('okok', 1)
     }
-}
-
-class _TestService extends TestService {
-
 }
 
 export default class ConverService<ServiceType extends object, To> {
@@ -123,8 +142,7 @@ export default class ConverService<ServiceType extends object, To> {
     }
 }
 
-const testService = new _TestService('ok')
-testService.print([1111])
+const testService = new TestService()
 // let metadataValue = Reflect.getMetadata('CoverAbleMethod', testService, "say");
 // // metadataValue = Reflect.getMetadata("CoverAbleType", Object.getPrototypeOf(testService).constructor);
 
@@ -141,11 +159,7 @@ const coverfn: ConverAbleFn<Person, Promise<Student>> = async (arg: Person): Pro
     return student;
 };
 
-const getObj = () => {
-    return new _TestService('ok')
-}
-
-const proxyService = new ConverService<TestService, Student>().attach(getObj());
+const proxyService = new ConverService<TestService, Student>().attach(testService);
 (proxyService.say() as unknown as Promise< ConverObj<Person, Promise<Student>>>).then((obj) => obj.Conert(coverfn).then(console.log));
 
 // const _proxyService = new ConverService<TestService, Student>().attach(testService);

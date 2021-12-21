@@ -4,19 +4,26 @@ import { ChannelCredentials, credentials as grpcCredentials } from "@grpc/grpc-j
 
 export { grpcCredentials }
 
+let jokePromiseClient: any;
+
 export function createBotPromiseClient(
     port: number,
     credentials: ChannelCredentials = grpcCredentials.createInsecure(),
     host: string = "0.0.0.0"
 ): Promise<BotPromiseClient> {
+    // @ts-ignore
+    if (jokePromiseClient != undefined) {
+        // @ts-ignore
+        return jokePromiseClient;
+    }
     return new Promise((resolve, reject) => {
         const client = new BotClient(
             `${host}:${port}`,
             credentials
         );
         // @ts-ignore
-        const jokePromiseClient = convertToPromiseClient(client);
-        jokePromiseClient.waitForReady(/* dealine */Date.now() + 10000, (e) => {
+        jokePromiseClient = convertToPromiseClient(client);
+        jokePromiseClient.waitForReady(/* dealine */Date.now() + 1, (e: any) => {
             if (e) {
                 reject(e);
             } else {

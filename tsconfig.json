@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES6",
+    "target": "ES2018",
     "module": "CommonJS",
     /* Visit https://aka.ms/tsconfig.json to read more about this file */
 
@@ -38,8 +38,8 @@
     // "alwaysStrict": true,                        /* Parse in strict mode and emit "use strict" for each source file. */
 
     /* Additional Checks */
-    // "noUnusedLocals": true,                      /* Report errors on unused locals. */
-    // "noUnusedParameters": true,                  /* Report errors on unused parameters. */
+    "noUnusedLocals": false,                      /* Report errors on unused locals. */
+    "noUnusedParameters": false,                  /* Report errors on unused parameters. */
     // "noImplicitReturns": true,                   /* Report error when not all code paths in function return a value. */
     // "noFallthroughCasesInSwitch": true,          /* Report errors for fallthrough cases in switch statement. */
     // "noUncheckedIndexedAccess": true,            /* Include 'undefined' in index signature results */
@@ -78,7 +78,8 @@
     ]
   },
   "include": [
-    "./src/**/*"
+    "./src/**/*",
+    "./ServiceCover/src/**/*"
   ],
   "exclude": []
 }

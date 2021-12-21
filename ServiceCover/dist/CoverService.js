@@ -19,7 +19,7 @@ function CoverAbleClass() {
 }
 exports.CoverAbleClass = CoverAbleClass;
 function CoverAbleMethod() {
-    return (target, key, descriptor) => {
+    return (target, key) => {
         // 在类的原型属性 'someMethod' 上定义元数据，key 为 `CoverAbleMethod`，value 为 true
         Reflect.defineMetadata('CoverAbleMethod', true, target, key);
     };
@@ -31,7 +31,7 @@ class ConverService {
     }
     getHander() {
         return {
-            get: (target, key, receiver) => {
+            get: (target, key) => {
                 if (target[key] instanceof Function && Reflect.getMetadata("CoverAbleType", Object.getPrototypeOf(target).constructor)) {
                     if (Reflect.getMetadata("CoverAbleMethod", target, key)) {
                         return function (...args) {
